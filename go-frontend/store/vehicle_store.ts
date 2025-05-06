@@ -13,12 +13,14 @@ export interface VehicleStore {
   addVehicle: (vehicle: Vehicle) => void
   removeVehicle: (id: string) => void
   updateVehicle: (id: string, updatedVehicle: Vehicle) => void
+  setVehicles: (vehicles: Vehicle[]) => void
 }
 
 export const useVehicleStore = create<VehicleStore>((set) => ({
   vehicles: [] as Vehicle[],
   addVehicle: (vehicle: Vehicle) => set((state: VehicleStore) => ({ vehicles: [...state.vehicles, vehicle] })),
   removeVehicle: (id: string) => set((state: VehicleStore) => ({ vehicles: state.vehicles.filter(vehicle => vehicle.id !== id) })),
+  setVehicles: (vehicles: Vehicle[]) => set({ vehicles }),
   updateVehicle: (id: string, updatedVehicle: Vehicle) => set((state: VehicleStore) => {
     const index = state.vehicles.findIndex(vehicle => vehicle.id === id);
     if (index !== -1) {

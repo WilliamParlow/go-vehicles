@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export interface Vehicle {
-  id: string
+  id?: string
   maker: string
   model: string
   year: number

@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"time"
 
+	"fmt"
+
 	"github.com/gorilla/mux"
 )
 
@@ -68,6 +70,7 @@ func CreateVehicleHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	vehicle.ID = fmt.Sprint(len(vehicles) + 1)
 	vehicles = append(vehicles, vehicle)
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(vehicle)

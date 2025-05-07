@@ -30,7 +30,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/vehicle", VehiclesHandler).Methods("GET")
 	r.HandleFunc("/vehicle", CreateVehicleHandler).Methods("POST")
-	r.HandleFunc("/vehicle/{id}", UpdateVehicleHandler).Methods("PUT")
+	r.HandleFunc("/vehicle/{id}", UpdateVehicleHandler).Methods("POST")
 	r.HandleFunc("/vehicle/{id}", DeleteVehicleHandler).Methods("DELETE")
 	r.HandleFunc("/vehicle/{id}", VehicleHandler).Methods("GET")
 
@@ -80,6 +80,7 @@ func CreateVehicleHandler(w http.ResponseWriter, r *http.Request) {
 func UpdateVehicleHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
+	log.Printf("Update:\nVehicle ID: %s\n", id)
 	var updatedVehicle Vehicle
 	if err := json.NewDecoder(r.Body).Decode(&updatedVehicle); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -88,6 +89,7 @@ func UpdateVehicleHandler(w http.ResponseWriter, r *http.Request) {
 	for i, vehicle := range vehicles {
 		if vehicle.ID == id {
 			vehicles[i] = updatedVehicle
+			vehicles[i].ID = id
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(updatedVehicle)
 			log.Printf("Update:\nVehicle ID: %s, Maker: %s, Model: %s, Year: %d, Price: %.2f\n", updatedVehicle.ID, updatedVehicle.Maker, updatedVehicle.Model, updatedVehicle.Year, updatedVehicle.Price)

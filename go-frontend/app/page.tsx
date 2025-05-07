@@ -2,7 +2,6 @@
 
 import { Form, FormControl, FormField } from "@/components/form";
 import { Input } from "@/components/input";
-import { Navbar } from "@/components/navbar/navbar";
 import { VehicleGrid } from "@/components/vehicle-grid/vehicle-table";
 import { useVehicleStore, Vehicle } from "@/store/vehicle_store";
 import axios from "axios";
@@ -57,31 +56,38 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar />
-      <main className="p-8">
-        <Form onSubmit={handleSubmit}>
-          <FormControl>
-            <FormField label="Maker">
-              <Input value={maker} onChange={(e) => setMaker(e.target.value)} />
-            </FormField>
-            <FormField label="Model">
-              <Input value={model} onChange={(e) => setModel(e.target.value)} />
-            </FormField>
-          </FormControl>
-          <FormControl>
-            <FormField label="Year">
-              <Input type="number" value={year} onChange={(e) => setYear(parseInt(e.target.value))} />
-            </FormField>
-            <FormField label="Price">
-              <Input type="number" value={price} placeholder="Enter price" onChange={(e) => setPrice(parseFloat(e.target.value))} />
-            </FormField>
-          </FormControl>
-          <FormControl>
-            <button type="submit" className="bg-emerald-500 font-bold text-white px-4 py-2 rounded">Submit</button>
-          </FormControl>
-        </Form>
+      <Form onSubmit={handleSubmit}>
+        <header className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Add Vehicle</h1>
+        </header>
+        <FormControl>
+          <FormField label="Maker">
+            <Input value={maker} onChange={(e) => setMaker(e.target.value)} />
+          </FormField>
+          <FormField label="Model">
+            <Input value={model} onChange={(e) => setModel(e.target.value)} />
+          </FormField>
+        </FormControl>
+        <FormControl>
+          <FormField label="Year">
+            <Input type="number" value={year} onChange={(e) => setYear(parseInt(e.target.value))} />
+          </FormField>
+          <FormField label="Price">
+            <Input type="number" value={price} placeholder="Enter price" onChange={(e) => setPrice(parseFloat(e.target.value))} />
+          </FormField>
+        </FormControl>
+        <FormControl>
+          <button type="submit" className="bg-emerald-500 font-bold text-white px-4 py-2 rounded">Submit</button>
+        </FormControl>
+      </Form>
+      <div className="mt-8">
+        <header className="flex justify-between items-center mb-4">
+          <hr className="border-b-2 border-cyan-700 w-full" />
+          <h1 className="text-2xl font-bold text-nowrap px-4">Vehicle Inventory</h1>
+          <hr className="border-b-2 border-cyan-700 w-full" />
+        </header>
         <VehicleGrid vehicles={vehicles} />
-      </main>
-    </div>
+      </div>
+    </div >
   );
 }
